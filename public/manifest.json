@@ -1,0 +1,30 @@
+{
+  "name": "Adriano Jorge | Soluções Inteligentes",
+  "short_name": "Adriano Jorge",
+  "description": "Desenvolvedor de Soluções Inteligentes para Automação de Processos Empresariais. Inteligência Artificial, automações e aplicações web sob medida.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFFFF",
+  "theme_color": "#111111",
+  "icons": [
+    {
+      "src": "https://res.cloudinary.com/dfbsag282/image/upload/v1784567562/icone_PWA_tzoyjz.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://res.cloudinary.com/dfbsag282/image/upload/v1784567562/icone_PWA_tzoyjz.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://res.cloudinary.com/dfbsag282/image/upload/v1784567562/icone_PWA_tzoyjz.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

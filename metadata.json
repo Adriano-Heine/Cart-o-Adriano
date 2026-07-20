@@ -1,0 +1,6 @@
+{
+  "name": "Adriano Jorge - Cartão Digital",
+  "description": "Cartão digital imersivo e premium para Adriano Jorge, desenvolvedor de soluções inteligentes e automação de processos empresariais.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
