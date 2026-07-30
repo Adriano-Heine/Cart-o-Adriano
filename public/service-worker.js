@@ -1,4 +1,4 @@
-const CACHE_NAME = 'adriano-jorge-digital-card-v1';
+const CACHE_NAME = 'adriano-jorge-digital-card-v4';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -7,6 +7,12 @@ const ASSETS_TO_CACHE = [
   '/icon.svg',
   '/manifest.json'
 ];
+
+// Detect development or preview environment to bypass aggressive caching
+const isDev = self.location.hostname.includes('localhost') || 
+              self.location.hostname.includes('ais-dev') || 
+              self.location.hostname.includes('ais-pre') || 
+              self.location.hostname.includes('run.app');
 
 // On installation, cache core shell assets
 self.addEventListener('install', (event) => {
@@ -34,11 +40,17 @@ self.addEventListener('activate', (event) => {
   return self.clients.claim();
 });
 
-// Cache-first and stale-while-revalidate strategy
+// Cache strategy: Bypass cache completely in dev/preview environments so updates are instant
 self.addEventListener('fetch', (event) => {
-  // Only handle local requests and static resource requests
   if (event.request.method !== 'GET') return;
 
+  if (isDev) {
+    // In dev, always go directly to network
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
+  // Production stale-while-revalidate strategy
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {

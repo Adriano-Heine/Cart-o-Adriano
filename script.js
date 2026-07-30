@@ -7,7 +7,7 @@
 
 // 1. EDITABLE SOCIAL LINKS (Configure your profile URLs here)
 const links = {
-  whatsapp: "https://wa.me/5571991261474?text=Ol%C3%A1%20Adriano%2C%20gostaria%20de%20saber%20mais%20sobre%20as%20solu%C3%A7%C3%B5es%20de%20automa%C3%A7%C3%A3o.",
+  whatsapp: "https://wa.me/5571991261474?text=Ol%C3%A1%20Adriano%2C%20gostaria%20de%20saber%20mais%20sobre%20suas%20solu%C3%A7%C3%B5es%20inteligentes.",
   pinterest: "https://br.pinterest.com/heinestudio/",
   tiktok: "https://www.tiktok.com/@vozepalavraoficial",
   youtube: "https://www.youtube.com/@adrianojorgeoficial",
@@ -33,6 +33,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Setup QR Code Modal
   setupQRCodeModal();
+
+  // Initialize Portfolio Carousel
+  setupPortfolioCarousel();
 
   // Initialize Lucide Icons if available (failsafe)
   if (typeof lucide !== "undefined") {
@@ -95,6 +98,14 @@ function setupScrollReveal() {
   revealElements.forEach((el) => {
     revealObserver.observe(el);
   });
+
+  // Failsafe: in iframe environments or if IntersectionObserver is blocked, 
+  // ensure everything is visible after a short delay so the user doesn't see a blank page.
+  setTimeout(() => {
+    revealElements.forEach((el) => {
+      el.classList.add("active");
+    });
+  }, 1000);
 }
 
 // 5. BUTTON ACTIONS: SHARE & VCARD EXPORT
@@ -118,7 +129,7 @@ function downloadVCard() {
   const info = {
     firstName: "Adriano",
     lastName: "Jorge",
-    organization: "Automação de Processos",
+    organization: "Soluções Inteligentes",
     title: "Desenvolvedor de Soluções Inteligentes",
     phone: "+5571991261474", // Correct phone
     email: "jorgeheine@gmail.com", // User email
@@ -162,7 +173,7 @@ END:VCARD`;
 async function shareCard() {
   const shareData = {
     title: "Adriano Jorge | Soluções Inteligentes",
-    text: "Conecte-se com Adriano Jorge - Desenvolvedor de Soluções Inteligentes para Automação de Processos Empresariais.",
+    text: "Conecte-se com Adriano Jorge - Desenvolvedor de Soluções Inteligentes para empresas em todo o Brasil.",
     url: window.location.href
   };
 
@@ -218,6 +229,28 @@ function showToast(message) {
 // 9. SERVICE WORKER REGISTRATION FOR OFFLINE PWA CAPABILITY
 function registerServiceWorker() {
   if ("serviceWorker" in navigator) {
+    const isDev = window.location.hostname.includes('localhost') || 
+                  window.location.hostname.includes('ais-dev') || 
+                  window.location.hostname.includes('ais-pre') || 
+                  window.location.hostname.includes('run.app');
+
+    if (isDev) {
+      // Unregister active service workers in dev/preview to prevent caching issues
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        let unregisteredAny = false;
+        for (let registration of registrations) {
+          registration.unregister();
+          unregisteredAny = true;
+          console.log("[Service Worker] Unregistered active worker for dev/preview reload.");
+        }
+        if (unregisteredAny) {
+          // Force a reload once to get fresh assets
+          window.location.reload();
+        }
+      });
+      return;
+    }
+
     window.addEventListener("load", () => {
       navigator.serviceWorker.register("/service-worker.js")
         .then((reg) => {
@@ -340,3 +373,87 @@ function setupQRCodeModal() {
     });
   }
 }
+
+// 12. PORTFOLIO CAROUSEL SYSTEM
+function setupPortfolioCarousel() {
+  const track = document.getElementById("carousel-track");
+  const slides = Array.from(document.querySelectorAll(".carousel-slide"));
+  const prevBtn = document.getElementById("carousel-prev");
+  const nextBtn = document.getElementById("carousel-next");
+  const dots = Array.from(document.querySelectorAll(".pagination-dot"));
+
+  if (!track || slides.length === 0) return;
+
+  let currentIndex = 0;
+
+  function updateCarousel(index) {
+    // Clamp index
+    if (index < 0) index = slides.length - 1;
+    if (index >= slides.length) index = 0;
+
+    currentIndex = index;
+
+    // Update active class on slides
+    slides.forEach((slide, i) => {
+      if (i === currentIndex) {
+        slide.classList.add("active");
+      } else {
+        slide.classList.remove("active");
+      }
+    });
+
+    // Update active class on dots
+    dots.forEach((dot, i) => {
+      if (i === currentIndex) {
+        dot.classList.add("active");
+      } else {
+        dot.classList.remove("active");
+      }
+    });
+
+    // Refresh icons inside slide if any dynamic icons were added
+    if (typeof lucide !== "undefined") {
+      lucide.createIcons();
+    }
+  }
+
+  // Next Button Click
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+      updateCarousel(currentIndex + 1);
+    });
+  }
+
+  // Prev Button Click
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => {
+      updateCarousel(currentIndex - 1);
+    });
+  }
+
+  // Dot Clicks
+  dots.forEach((dot) => {
+    dot.addEventListener("click", (e) => {
+      const targetIndex = parseInt(e.currentTarget.getAttribute("data-index"), 10);
+      updateCarousel(targetIndex);
+    });
+  });
+
+  // Optional: Auto-play every 7 seconds to keep it dynamic
+  let autoplayTimer = setInterval(() => {
+    updateCarousel(currentIndex + 1);
+  }, 7000);
+
+  // Pause autoplay on user interaction
+  const pauseAutoplay = () => {
+    if (autoplayTimer) {
+      clearInterval(autoplayTimer);
+      autoplayTimer = null;
+    }
+  };
+
+  if (nextBtn) nextBtn.addEventListener("click", pauseAutoplay);
+  if (prevBtn) prevBtn.addEventListener("click", pauseAutoplay);
+  dots.forEach(dot => dot.addEventListener("click", pauseAutoplay));
+}
+

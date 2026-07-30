@@ -873,3 +873,703 @@ body {
 .btn-copy-small:hover {
   color: var(--color-black);
 }
+
+/* --- Portfolio & Interactive Carousel Styles --- */
+.portfolio-header-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 24px;
+}
+
+.portfolio-carousel-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-zinc-100);
+  border-radius: var(--border-radius-card);
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.015);
+  transition: var(--transition-premium);
+}
+
+.carousel-wrapper:hover {
+  border-color: var(--color-zinc-300);
+  box-shadow: var(--shadow-hover);
+}
+
+.carousel-track {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-slide {
+  grid-area: 1 / 1 / 2 / 2;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(0.98) translateY(8px);
+}
+
+.carousel-slide.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: scale(1) translateY(0);
+}
+
+/* Slide Grid Structure */
+.slide-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .slide-grid {
+    grid-template-columns: 1.1fr 0.9fr;
+    height: 380px; /* Rigid identical height on desktop to keep transitions perfectly stable and fluid */
+  }
+}
+
+/* Slide Visual Section - Mockups */
+.slide-visual {
+  background-color: #0F0F11; /* Sleek high-tech dark background */
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--color-zinc-100);
+  justify-content: center;
+  align-items: center;
+  height: 260px; /* Uniform height on mobile */
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .slide-visual {
+    border-bottom: none;
+    border-right: 1px solid #1D1D20;
+    padding: 40px;
+    height: 100%; /* Fill the 380px grid perfectly */
+  }
+}
+
+/* Rigid Uniform Mockup Window for symmetrical look across all slides */
+.mockup-window {
+  background-color: #16161A;
+  border: 1px solid #1D1D20;
+  border-radius: 12px;
+  padding: 16px;
+  width: 100%;
+  max-width: 320px;
+  height: 190px; /* Fixed height for all mockups */
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+}
+
+/* Standard Header for Mockups */
+.mockup-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #1D1D20;
+}
+
+.mockup-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.mock-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.mock-dot.red { background-color: #FF5F56; }
+.mock-dot.yellow { background-color: #FFBD2E; }
+.mock-dot.green { background-color: #27C93F; }
+
+.mockup-title {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 500;
+  color: #8E8E93;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.mockup-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+}
+
+/* 1. WhatsApp Chat Mockup CSS */
+.whatsapp-chat {
+  font-family: var(--font-primary);
+}
+
+.chat-bubble {
+  max-width: 85%;
+  padding: 8px 12px; /* Symmetrical compact padding */
+  border-radius: 14px;
+  font-size: 12px;
+  line-height: 1.35;
+  position: relative;
+  animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.chat-bubble.received {
+  background-color: #242428;
+  color: #E4E4E7;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+.chat-bubble.sent {
+  background-color: #056162; /* Authentic dark mode whatsapp teal */
+  color: #FFFFFF;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-text {
+  margin-bottom: 4px;
+}
+
+.chat-time {
+  display: block;
+  font-size: 9px;
+  color: #A1A1AA;
+  text-align: right;
+}
+
+.read-check {
+  color: #34B7F1;
+  font-weight: bold;
+  margin-left: 2px;
+}
+
+/* 2. AI Assistant Console CSS */
+.ai-assistant {
+  font-family: var(--font-primary);
+}
+
+.ai-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.ai-avatar {
+  width: 28px;
+  height: 28px;
+  background-color: rgba(39, 201, 63, 0.1);
+  border: 1px solid rgba(39, 201, 63, 0.3);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #27C93F;
+}
+
+.ai-avatar svg {
+  width: 14px;
+  height: 14px;
+}
+
+.ai-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #E4E4E7;
+}
+
+.ai-status {
+  font-size: 10px;
+  color: #27C93F;
+  animation: pulse-status 1.5s infinite;
+}
+
+.ai-logs {
+  background-color: #16161A;
+  border-radius: 10px;
+  padding: 12px;
+  border: 1px solid #242428;
+}
+
+.log-line {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  color: #A1A1AA;
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+
+.log-line:last-child {
+  margin-bottom: 0;
+}
+
+.log-tag {
+  color: #58A6FF;
+  font-weight: bold;
+}
+
+.log-line.success {
+  color: #34D399;
+}
+
+@keyframes pulse-status {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* 3. Sales Dashboard Mockup CSS */
+.dashboard-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.dash-card {
+  background-color: #16161A;
+  border: 1px solid #242428;
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dash-card-label {
+  font-size: 9px;
+  color: #71717A;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dash-card-value {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.dash-card-trend {
+  font-size: 9px;
+  color: #10B981;
+  font-weight: bold;
+}
+
+.dash-chart-mock {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 60px;
+  padding: 0 8px;
+  background-color: #16161A;
+  border-radius: 8px;
+  border: 1px solid #242428;
+}
+
+.chart-bar {
+  width: 14%;
+  background-color: #27272A;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  transition: height 1s ease;
+}
+
+.chart-bar.active {
+  background-color: #34D399; /* Emerald dynamic highlight */
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.2);
+}
+
+/* Slide Content Details Section */
+.slide-content {
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  min-height: 240px; /* Uniform height baseline on mobile */
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .slide-content {
+    padding: 40px;
+    height: 100%; /* Fill the 380px grid perfectly */
+    min-height: unset;
+  }
+}
+
+.project-tag {
+  align-self: flex-start;
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-zinc-400);
+  background-color: var(--color-zinc-50);
+  border: 1px solid var(--color-zinc-200);
+  padding: 4px 10px;
+  border-radius: var(--border-radius-pill);
+}
+
+.project-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-black);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.project-description {
+  font-family: var(--font-primary);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--color-zinc-500);
+}
+
+.project-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-zinc-100);
+}
+
+.metric-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metric-value {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-black);
+}
+
+.metric-label {
+  font-family: var(--font-primary);
+  font-size: 10px;
+  color: var(--color-zinc-400);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Carousel Control Buttons */
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--color-zinc-200);
+  color: var(--color-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  z-index: 15;
+  box-shadow: 0 4px 12px rgba(17, 17, 17, 0.05);
+}
+
+.carousel-control:hover {
+  background-color: var(--color-white);
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 8px 16px rgba(17, 17, 17, 0.08);
+}
+
+.carousel-control.prev {
+  left: 12px;
+}
+
+.carousel-control.next {
+  right: 12px;
+}
+
+.carousel-control svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Carousel Pagination Dots */
+.carousel-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.pagination-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-zinc-200);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.pagination-dot:hover {
+  background-color: var(--color-zinc-400);
+}
+
+.pagination-dot.active {
+  background-color: var(--color-black);
+  width: 18px;
+  border-radius: 4px;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* --- New Custom Elements Positioning & Location Tags --- */
+.profile-location-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-primary);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--color-zinc-500);
+  background-color: var(--color-zinc-50);
+  border: 1px solid var(--color-zinc-100);
+  padding: 5px 12px;
+  border-radius: var(--border-radius-pill);
+  margin-bottom: 8px;
+  width: fit-content;
+}
+
+.location-pin {
+  font-size: 13px;
+}
+
+.profile-bio-custom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.hero-title-main {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--color-black);
+  letter-spacing: -0.02em;
+}
+
+.hero-bullets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-primary);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-zinc-400);
+}
+
+.bullet-divider {
+  color: var(--color-zinc-300);
+}
+
+.hero-tagline {
+  font-family: var(--font-primary);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--color-zinc-500);
+}
+
+.section-subtitle {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-zinc-500);
+  margin-top: 6px;
+  max-width: 600px;
+}
+
+.section-subtitle strong {
+  color: var(--color-black);
+  font-weight: 600;
+}
+
+/* --- Mockup Body - Branding Mock (Slide 2) --- */
+.branding-mock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  gap: 16px;
+  height: 100%;
+}
+
+.brand-showcase {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--color-zinc-50);
+  border: 1px dashed var(--color-zinc-200);
+  padding: 16px 20px;
+  border-radius: var(--border-radius-item);
+  width: 100%;
+  max-width: 240px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.brand-logo-preview {
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.brand-typo {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.brand-name-text {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-black);
+}
+
+.brand-sub {
+  font-family: var(--font-primary);
+  font-size: 10px;
+  color: var(--color-zinc-400);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.color-palette {
+  display: flex;
+  gap: 8px;
+}
+
+.color-swatch-item {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--color-white);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Mockup Body - Pipeline Workflow Preview (Slide 3) --- */
+.pipeline-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px 12px;
+  height: 100%;
+}
+
+.pipeline-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-zinc-100);
+  padding: 10px;
+  border-radius: 10px;
+  min-width: 70px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.pipeline-step i {
+  color: var(--color-zinc-400);
+}
+
+.pipeline-step span {
+  font-family: var(--font-primary);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--color-zinc-500);
+}
+
+.pipeline-step.active {
+  border-color: var(--color-black);
+  background-color: var(--color-zinc-50);
+}
+
+.pipeline-step.active i {
+  color: var(--color-black);
+  animation: pulse-zap 2s infinite;
+}
+
+.pipeline-step.active span {
+  color: var(--color-black);
+  font-weight: 600;
+}
+
+.pipeline-connector {
+  color: var(--color-zinc-300);
+  display: flex;
+  align-items: center;
+}
+
+@keyframes pulse-zap {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); text-shadow: 0 0 8px rgba(37, 211, 102, 0.2); }
+  100% { transform: scale(1); }
+}
+
